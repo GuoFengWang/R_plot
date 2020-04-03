@@ -1,0 +1,10 @@
+library(ggplot2)
+setwd('/Users/andy/Desktop/plot_R')
+data = read.table('20A022597.sorted.cnr', head = T, sep = '\t', check.names = F)
+data$chromosome = factor(data$chromosome, levels = c(paste0('chr', 1:22), 'chrX', 'chrY'))
+test_data=data[c(17025:17050),]
+p = ggplot(test_data, aes(test_data$start, 2*2^test_data$log2))+geom_point()+scale_x_discrete(breaks=NULL)+theme_minimal()+theme(legend.position="none")+xlab(NULL)+scale_y_continuous(name="Copy Number", limits = c(0,8))+theme(plot.title = element_text(hjust = 0.5,size=14),axis.text=element_text(size=14))
+a= p+geom_segment(aes(x=5766787,y=2,xend=6818026,yend=2),data=test_data)
+c=a+geom_segment(aes(x=6868085,y=1,xend=7068321,yend=1,colour='red'),data=test_data)
+d=c+labs(title='20A022597_5q13.2(68896635-70595849)×1')+theme(plot.title = element_text(hjust = 0.5,size=14))
+ggsave('22222.png',width=26, height = 3)
